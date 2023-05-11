@@ -1,6 +1,6 @@
 # Trustle Search
 
-Input:
+**Input:**
 - Full name
 - Age
 - Potential username
@@ -8,5 +8,5 @@ Input:
 - Geo location
 - Potential followers and following
 
-Output:
+**Output:**
 - List of potential accounts
