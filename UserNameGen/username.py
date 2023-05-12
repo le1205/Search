@@ -87,7 +87,7 @@ class userNameGen:
         if looplen > max:
             looplen = max
         for i in range(1, 11 ** (max + 1)):
-            binary = self.decimal_to_11_base(i)[2:].zfill(max)
+            binary = self.decimal_to_11_base(i)[2:]
             combination = merge_name[0]
             for j in range(len(binary)):
                 if binary[j] != 'A':
