@@ -1,15 +1,17 @@
 import itertools
 
 # Creating a class for username generatior
+
+
 class userNameGen:
     def __init__(self, name) -> None:
         self.name = name
 
 # list of all the possible combinations
-    def comb(self,s):
+    def comb(self, s):
         st_arr = []
 
-        for i in range(len(s)-1,-1,-1):
+        for i in range(len(s)-1, -1, -1):
             for j in range(len(st_arr)):
                 st_arr.append(s[i]+st_arr[j])
             st_arr.append(s[i])
@@ -34,24 +36,29 @@ class userNameGen:
 
 
 # Generating the username
+
+
     def gen(self) -> list:
         out = []
         out_with_symbol = []
         generator = []
-        name = self.name.lower()                        # Converting the name to lowercase
+        # Converting the name to lowercase
+        name = self.name.lower()
         name = name.split()                             # Splitting the name into a list
 
         for i in name:
             generator.append(self.comb(i))
-            out.extend(self.comb(i))                    # Adding the combinations of the name to the list (Word)
-        
-        out.extend(self.gen_comb(generator))            # Adding the combinations of the name to the list (Word X Word)
-        
-        for na in out:
-            out_with_symbol.extend( self.generate_symbol_names(na, '_') )
+            # Adding the combinations of the name to the list (Word)
+            out.extend(self.comb(i))
 
-        return out_with_symbol
-    
+        # Adding the combinations of the name to the list (Word X Word)
+        out.extend(self.gen_comb(generator))
+
+        for na in out:
+            out_with_symbol.extend(self.generate_symbol_names(na, '_'))
+
+        return out_with_symbol + out
+
 # Adding _
     def generate_symbol_names(self, name, symbol):
         merge_name = ''.join(name)
