@@ -9,9 +9,9 @@ def main(name):
 
     print(filteredname.testfilter())
 
-
-    # with open("output.txt", "w") as f:
-    #     f.write(str(test.gen()))
+    # print the list to output file
+    with open("output.txt", "w") as f:
+        f.write(str(name.gen()))
 
 
 if __name__ == "__main__":
