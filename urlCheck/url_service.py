@@ -27,3 +27,14 @@ class URLService:
             executor.map(lambda site: URLService.check_url(site, username, resutl_list), URL)
         
         return resutl_list
+    
+    @staticmethod
+    def scrape_user_instagram(username: str, session: ScrapflyClient):
+        """scrape user's data"""
+        result = session.scrape(ScrapeConfig(
+            url=f"https://i.instagram.com/api/v1/users/web_profile_info/?username={username}", 
+            headers={"x-ig-app-id": "936619743392459"},
+            asp=True
+        ))
+        data = json.loads(result.content)
+        return data['data']['user']
