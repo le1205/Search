@@ -1,0 +1,44 @@
+Index: urlCheck/url_service.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import httpx\r\nfrom concurrent.futures import ThreadPoolExecutor\r\nfrom httpx import ConnectTimeout, ReadTimeout\r\n\r\nclass URLService:\r\n    @staticmethod\r\n    def check_url(site, username, result_list):\r\n        url = site.replace('@username', username)\r\n        try:\r\n            with httpx.Client(timeout=(5,14)) as client:\r\n                response = client.get(url)\r\n                if response.status_code == 200:\r\n                    result_list.append({url: True})\r\n                else: \r\n                    result_list.append({site: False})\r\n        except (ConnectTimeout, ReadTimeout):\r\n            print('Request time out: ', url)\r\n            result_list.append({site: None})\r\n        except Exception as e:\r\n            print('Request error: ',str(e), url)\r\n            result_list.append({site: None})\r\n\r\n    @staticmethod\r\n    def is_username_present(username, URL):\r\n        resutl_list = []\r\n        with ThreadPoolExecutor(max_workers=10) as executor:\r\n            executor.map(lambda site: URLService.check_url(site, username, resutl_list), URL)\r\n        \r\n        return resutl_list
+===================================================================
+diff --git a/urlCheck/url_service.py b/urlCheck/url_service.py
+--- a/urlCheck/url_service.py	
++++ b/urlCheck/url_service.py	
+@@ -2,22 +2,23 @@
+ from concurrent.futures import ThreadPoolExecutor
+ from httpx import ConnectTimeout, ReadTimeout
+ 
++
+ class URLService:
+     @staticmethod
+     def check_url(site, username, result_list):
+         url = site.replace('@username', username)
+         try:
+-            with httpx.Client(timeout=(5,14)) as client:
++            with httpx.Client(timeout=(5, 14)) as client:
+                 response = client.get(url)
+                 if response.status_code == 200:
+                     result_list.append({url: True})
+-                else: 
++                else:
+                     result_list.append({site: False})
+         except (ConnectTimeout, ReadTimeout):
+             print('Request time out: ', url)
+             result_list.append({site: None})
+         except Exception as e:
+-            print('Request error: ',str(e), url)
++            print('Request error: ', str(e), url)
+             result_list.append({site: None})
+ 
+     @staticmethod
+@@ -25,5 +26,5 @@
+         resutl_list = []
+         with ThreadPoolExecutor(max_workers=10) as executor:
+             executor.map(lambda site: URLService.check_url(site, username, resutl_list), URL)
+-        
+-        return resutl_list
+\ No newline at end of file
++
++        return resutl_list

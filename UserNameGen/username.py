@@ -57,10 +57,10 @@ class userNameGen:
         for na in out:
             out_with_symbol.extend(self.generate_symbol_names(na, '_'))
 
-        for na in out_with_symbol + out:
-            out_with_numbers.extend(self.generate_names_with_number(na, 0, 5))
+        # for na in out_with_symbol + out:
+        #     out_with_numbers.extend(self.generate_names_with_number(na, 0, 5))
 
-        return out_with_symbol + out + out_with_numbers
+        return out_with_symbol + out
 
 # Adding _
     def generate_symbol_names(self, name, symbol):
